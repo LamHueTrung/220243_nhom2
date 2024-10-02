@@ -7,7 +7,7 @@
             <h3>Thêm Sinh Viên</h3>
         </div>
         <div class="card-body">
-            <form action="modules/qlSV/xuly.php" method="POST">
+            <form action="modules/qlSV/xuly.php" method="POST" enctype="multipart/form-data">
                 <?php
                     while($row = mysqli_fetch_assoc($query)){
                 ?>
@@ -53,7 +53,7 @@
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Số điện thoại:</label>
-                        <input type="number" class="form-control" name="txtsodienthoai" value="<?php echo $row['soDT'] ?>" required>
+                        <input type="tel" class="form-control" name="txtsodienthoai" value="<?php echo $row['soDT'] ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Địa chỉ:</label>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="form-group">
                         <label>Chọn file hình ảnh:</label>
-                        <input type="file" name="txthinhanh" name="txthinhanh" value="<?php echo $row['hinhAnh'] ?>">
+                        <input type="file" name="txthinhanh" value="<?php echo $row['hinhAnh'] ?>">
                     </div>
                     <div class="form-group">
                         <label for="">Lớp</label>
@@ -82,7 +82,7 @@
                     </div>
                     <?php } ?>
                     <div class="form-group">
-                    <input class="btn btn-sm btn-success" type="submit" name="edit" value="Edit">
+                    <input onclick = "return confirm('Bạn có thực sự muốn sửa không?')" class="btn btn-sm btn-success" type="submit" name="edit" value="Edit">
                     </div>
             </form>
         </div>

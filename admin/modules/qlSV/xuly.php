@@ -14,7 +14,6 @@
     $hinhanh = $_FILES['txthinhanh']['name'];
     $hinhanhtam = $_FILES['txthinhanh']['tmp_name'];
 
-
     if(isset($_POST['add'])){
         $sql_them = "INSERT INTO sinhvien (maSV, hoLot, tenSV, ngaySinh, gioiTinh, maLop, email, soDT, diaChi, hinhAnh)
         VALUES ('$masv', '$hosv', '$tensv', '$ngaysinh', '$gioitinh', '$malop', '$email', '$sodienthoai', '$diachi', '$hinhanh')";
@@ -23,21 +22,22 @@
         header('location: ../../index.php?action=qlsv&query=lietke');
     }elseif(isset($_POST['edit'])){
         if($hinhanh!=''){
-            move_uploaded_file($hinhanhtam,'/'.$hinhanh);
             $id = $_POST['masv'];  // Lấy masv từ POST
+            move_uploaded_file($hinhanhtam,'image/'.$hinhanh);
             $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop' , email = '$email', soDT = '$sodienthoai', diaChi = '$diachi' , hinhAnh = '$hinhanh' 
             WHERE maSV = '$id'";  
-            $query = mysqli_query($conn, $sql);
+            $sql_slt = "SELECT * FROM sinhvien where maSV = '$id' LIMIT 1";
+            $query = mysqli_query($conn, $sql_slt);
             while($row = mysqli_fetch_array($query)){
                 unlink('image/'.$row['hinhAnh']);
             }
         }else{
-            $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop' , email = '$email', soDT = '$sodienthoai', diaChi = '$diachi'";
-
+            $id = $_POST['masv'];  // Lấy masv từ POST
+            $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop' , email = '$email', soDT = '$sodienthoai', diaChi = '$diachi'
+            WHERE maSV = '$id' ";
         }
         mysqli_query($conn, $sql);
         header('location: ../../index.php?action=qlsv&query=lietke');
-        
     }else{
         $id = $_GET['masv'];
         $sql = "SELECT * FROM sinhvien WHERE maSV = '$id' LIMIT 1";

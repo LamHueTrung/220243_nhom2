@@ -26,7 +26,7 @@
                     <input type="text" class="form-control" name="txtghichu" value="<?php echo $row['ghiChu'];?>" required>
                 </div>
                 <div class="form-group">
-                    <input class="btn btn-sm btn-success" type="submit" name="edit" value="Edit">
+                    <input onclick = "return confirm('Bạn có thực sự muốn sửa không?')" class="btn btn-sm btn-success" type="submit" name="edit" value="Edit">
                 </div>
                 <?php } ?>
             </form>
