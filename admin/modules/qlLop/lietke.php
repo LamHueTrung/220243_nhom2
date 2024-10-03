@@ -24,7 +24,7 @@
                     <td><?php echo $row['ghiChu']?></td>
                     <td>
                         <a href="?action=qllop&query=sua&malop=<?php echo $row['maLop']?>" class="btn btn-sm btn-primary"  type="submit" >Edit</a>
-                        <a onclick = "return confirm('Bạn có thực sự muốn xóa không?')" href="modules/qlLop/xuly.php?malop=<?php echo $row['maLop']; ?>" class="btn btn-sm btn-danger" type="submit">Delete</a>
+                        <a onclick = "return confirm('Nếu xóa lóp này thì tất cả sinh viên ỏ lóp này sẽ bị xóa bạn có chác muốn xóa không?')" href="modules/qlLop/xuly.php?malop=<?php echo $row['maLop']; ?>" class="btn btn-sm btn-danger" type="submit">Delete</a>
                     </td>
                 </tr>
             <?php } ?> 
