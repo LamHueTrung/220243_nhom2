@@ -21,8 +21,8 @@
         move_uploaded_file($hinhanhtam, 'image/' .$hinhanh);
         header('location: ../../index.php?action=qlsv&query=lietke');
     }elseif(isset($_POST['edit'])){
+        $id = $_POST['masv'];  // Lấy masv từ POST
         if($hinhanh!=''){
-            $id = $_POST['masv'];  // Lấy masv từ POST
             move_uploaded_file($hinhanhtam,'image/'.$hinhanh);
             $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop' , email = '$email', soDT = '$sodienthoai', diaChi = '$diachi' , hinhAnh = '$hinhanh' 
             WHERE maSV = '$id'";  
@@ -32,7 +32,6 @@
                 unlink('image/'.$row['hinhAnh']);
             }
         }else{
-            $id = $_POST['masv'];  // Lấy masv từ POST
             $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop' , email = '$email', soDT = '$sodienthoai', diaChi = '$diachi'
             WHERE maSV = '$id' ";
         }

@@ -19,13 +19,12 @@
             <tbody>
             <?php while($row = mysqli_fetch_assoc($query)){?>
                 <tr>
-                    <th><?php echo $row['maLop'] ?></th>
+                    <th><a class="btn " href="index.php?action=qllop&query=showup&malop=<?php echo $row ['maLop']?>"><b><?php echo $row['maLop'] ?></b></a></th>
                     <td><?php echo $row['tenLop']?></td>
                     <td><?php echo $row['ghiChu']?></td>
                     <td>
                         <a href="?action=qllop&query=sua&malop=<?php echo $row['maLop']?>" class="btn btn-sm btn-primary"  type="submit" >Edit</a>
                         <a onclick = "return confirm('Bạn có thực sự muốn xóa không?')" href="modules/qlLop/xuly.php?malop=<?php echo $row['maLop']; ?>" class="btn btn-sm btn-danger" type="submit">Delete</a>
-                        <a class="btn " href="index.php?action=qllop&query=showup&malop=<?php echo $row ['maLop']?>">Show</a>
                     </td>
                 </tr>
             <?php } ?> 

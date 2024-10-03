@@ -20,16 +20,16 @@
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
-              <li class="list-group-item"><strong>Ngày sinh: <?php echo $row['ngaySinh'];?> </strong></li>
-              <li class="list-group-item"><strong>Giới tính: <?php echo $row['gioiTinh'];?></strong></li>
-              <li class="list-group-item"><strong>Email: <?php echo $row['email'];?></strong></li>
-              <li class="list-group-item"><strong>Số điện thoại: <?php echo ($row['soDT'])?></strong></li>
-              <li class="list-group-item"><strong>Địa chỉ: <?php echo $row['diaChi'];?></strong></li>
+              <li class="list-group-item"><strong>Ngày sinh: </strong><?php echo $row['ngaySinh'];?> </li>
+              <li class="list-group-item"><strong>Giới tính: </strong><?php echo $row['gioiTinh'];?></li>
+              <li class="list-group-item"><strong>Email: </strong><?php echo $row['email'];?></li>
+              <li class="list-group-item"><strong>Số điện thoại: </strong><?php echo ($row['soDT'])?></li>
+              <li class="list-group-item"><strong>Địa chỉ: </strong><?php echo $row['diaChi'];?></li>
             </ul>
           </div>
         </div>
         <?php } ?>
-        <!--
+<!--         
         <div class="card mt-4">
           <div class="card-header">
             <h4>Statistics</h4>

@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 02, 2024 at 10:56 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th10 03, 2024 lúc 10:02 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ql_sinhvien`
+-- Cơ sở dữ liệu: `ql_sinhvien`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lophoc`
+-- Cấu trúc bảng cho bảng `lophoc`
 --
 
 CREATE TABLE `lophoc` (
@@ -34,17 +34,17 @@ CREATE TABLE `lophoc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `lophoc`
+-- Đang đổ dữ liệu cho bảng `lophoc`
 --
 
 INSERT INTO `lophoc` (`maLop`, `tenLop`, `ghiChu`) VALUES
-('DA21TTE', 'Đại học công nghệ thông tin E khóa 21', 'Khoa Kĩ Thuật Công Nghệ'),
-('DF23TT', 'Liên thông - Công nghệ thông tin khóa 21', 'Liên thông');
+('DA21TTB', 'Công Nghệ Thông Tin B', 'Lop B'),
+('DA21TTC', 'Công Nghệ Thông Tin C', 'Khóa 21 - năm học 2021-2025');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sinhvien`
+-- Cấu trúc bảng cho bảng `sinhvien`
 --
 
 CREATE TABLE `sinhvien` (
@@ -61,36 +61,38 @@ CREATE TABLE `sinhvien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `sinhvien`
+-- Đang đổ dữ liệu cho bảng `sinhvien`
 --
 
 INSERT INTO `sinhvien` (`maSV`, `hoLot`, `tenSV`, `ngaySinh`, `gioiTinh`, `maLop`, `email`, `soDT`, `diaChi`, `hinhAnh`) VALUES
-('110121206', 'La', 'Tấn Đạt', '2003-02-02', 'Nam', 'DF23TT', 'kira3689@gmail.com', '0328256849', 'Trà Vinh', 'logotvu.png'),
-('110121208', 'La', 'Tấn Đtaa', '2003-02-02', 'Nam', 'DF23TT', 'kira3689@gmail.com', '0328256849', 'Trà Vinh', 'NetworkDiagram.png');
+('110121206', 'La Tấn', 'Đạt', '2003-02-02', 'Nam', 'DA21TTC', 'latandat@gmail.com', '0912345678', 'Trà Vinh', 'latandat.jpg'),
+('110121255', 'Lâm Huệ', 'Trung', '2003-02-08', 'Nam', 'DA21TTC', 'lamhuetrung@gmail.com', '0763849007', 'Tiểu Cần, Trà Vinh', 'lamhuetrung.jpg'),
+('110121266', 'Mã Đại', 'Phú', '2003-11-16', 'Nữ', 'DA21TTC', 'daiphu1611@gmail.com', '0868453011', 'Phước Hưng, Tiểu Cần, Trà Vinh', 'madaiphu.jpg'),
+('110121269', 'Nguyễn Hoàng', 'Nhựt ', '2002-10-09', 'Nam', 'DA21TTC', 'hoangnhutnguyen7@gmail.com', '0967331058', 'Đại Thôn, Phước Hảo, Châu Thành, Trà Vinh', '427887082_1615266225898770_1382639537682669743_n.jpg');
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `lophoc`
+-- Chỉ mục cho bảng `lophoc`
 --
 ALTER TABLE `lophoc`
   ADD PRIMARY KEY (`maLop`);
 
 --
--- Indexes for table `sinhvien`
+-- Chỉ mục cho bảng `sinhvien`
 --
 ALTER TABLE `sinhvien`
   ADD PRIMARY KEY (`maSV`),
   ADD KEY `maLop` (`maLop`);
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `sinhvien`
+-- Các ràng buộc cho bảng `sinhvien`
 --
 ALTER TABLE `sinhvien`
   ADD CONSTRAINT `sinhvien_ibfk_1` FOREIGN KEY (`maLop`) REFERENCES `lophoc` (`maLop`);

@@ -24,7 +24,7 @@
             <tbody>
             <?php while($row = mysqli_fetch_array($query)){?>
                 <tr>
-                    <th><?php echo $row['maSV'] ?></th>
+                <td><a class="btn " href="index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>"><b><?php echo $row['maSV'] ?></b></a></td>
                     <td><?php echo $row['hoLot'] . " " . $row['tenSV']; ?></td>
                     <td><?php echo $row['ngaySinh']?></td>
                     <td><?php echo $row['gioiTinh']?></td>
