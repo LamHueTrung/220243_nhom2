@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 03, 2024 lúc 10:02 AM
+-- Thời gian đã tạo: Th10 04, 2024 lúc 08:56 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -30,16 +30,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `lophoc` (
   `maLop` varchar(12) NOT NULL,
   `tenLop` varchar(100) NOT NULL,
-  `ghiChu` varchar(100) NOT NULL
+  `ghiChu` varchar(100) NOT NULL,
+  `isDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `lophoc`
 --
 
-INSERT INTO `lophoc` (`maLop`, `tenLop`, `ghiChu`) VALUES
-('DA21TTB', 'Công Nghệ Thông Tin B', 'Lop B'),
-('DA21TTC', 'Công Nghệ Thông Tin C', 'Khóa 21 - năm học 2021-2025');
+INSERT INTO `lophoc` (`maLop`, `tenLop`, `ghiChu`, `isDeleted`) VALUES
+('DA21TTC', 'Công Nghệ Thông Tin C', 'Khóa 21 - năm học 2021-2025', 0);
 
 -- --------------------------------------------------------
 
@@ -57,18 +57,19 @@ CREATE TABLE `sinhvien` (
   `email` varchar(255) NOT NULL COMMENT 'Email',
   `soDT` varchar(11) NOT NULL COMMENT 'Số điện thoại',
   `diaChi` text NOT NULL COMMENT 'Địa chỉ',
-  `hinhAnh` varchar(255) NOT NULL COMMENT 'Hình ảnh'
+  `hinhAnh` varchar(255) NOT NULL COMMENT 'Hình ảnh',
+  `isDeleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `sinhvien`
 --
 
-INSERT INTO `sinhvien` (`maSV`, `hoLot`, `tenSV`, `ngaySinh`, `gioiTinh`, `maLop`, `email`, `soDT`, `diaChi`, `hinhAnh`) VALUES
-('110121206', 'La Tấn', 'Đạt', '2003-02-02', 'Nam', 'DA21TTC', 'latandat@gmail.com', '0912345678', 'Trà Vinh', 'latandat.jpg'),
-('110121255', 'Lâm Huệ', 'Trung', '2003-02-08', 'Nam', 'DA21TTC', 'lamhuetrung@gmail.com', '0763849007', 'Tiểu Cần, Trà Vinh', 'lamhuetrung.jpg'),
-('110121266', 'Mã Đại', 'Phú', '2003-11-16', 'Nữ', 'DA21TTC', 'daiphu1611@gmail.com', '0868453011', 'Phước Hưng, Tiểu Cần, Trà Vinh', 'madaiphu.jpg'),
-('110121269', 'Nguyễn Hoàng', 'Nhựt ', '2002-10-09', 'Nam', 'DA21TTC', 'hoangnhutnguyen7@gmail.com', '0967331058', 'Đại Thôn, Phước Hảo, Châu Thành, Trà Vinh', '427887082_1615266225898770_1382639537682669743_n.jpg');
+INSERT INTO `sinhvien` (`maSV`, `hoLot`, `tenSV`, `ngaySinh`, `gioiTinh`, `maLop`, `email`, `soDT`, `diaChi`, `hinhAnh`, `isDeleted`) VALUES
+('110121206', 'La Tấn', 'Đạt', '2003-02-02', 'Nam', 'DA21TTC', 'latandat@gmail.com', '0912345678', 'Trà Vinh', 'latandat.jpg', 1),
+('110121255', 'Lâm Huệ', 'Trung', '2003-02-08', 'Nam', 'DA21TTC', 'lamhuetrung@gmail.com', '0763849007', 'Tiểu Cần, Trà Vinh', 'lamhuetrung.jpg', 1),
+('110121266', 'Mã Đại', 'Phú', '2003-11-16', 'Nữ', 'DA21TTC', 'daiphu1611@gmail.com', '0868453011', 'Phước Hưng, Tiểu Cần, Trà Vinh', 'madaiphu.jpg', 1),
+('110121269', 'Nguyễn Hoàng', 'Nhựt ', '2002-10-09', 'Nam', 'DA21TTC', 'hoangnhutnguyen7@gmail.com', '0967331058', 'Đại Thôn, Phước Hảo, Châu Thành, Trà Vinh', '427887082_1615266225898770_1382639537682669743_n.jpg', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ

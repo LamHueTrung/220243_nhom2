@@ -31,6 +31,9 @@
                 </div>
             </div>
         <?php } ?>
+            <div class="text-right">
+                <a href="./index.php?action=qlsv&query=lietke" class="btn btn-primary">Quay lại</a>
+            </div>
 <!--         
         <div class="card mt-4">
             <div class="card-header">
