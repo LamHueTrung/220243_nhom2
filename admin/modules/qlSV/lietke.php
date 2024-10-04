@@ -1,12 +1,17 @@
 <?php
     if (isset($_POST['search'])) {
         $SearchText = $_POST['SearchText'];
-        $sql = "SELECT * FROM sinhvien WHERE maSV LIKE '%$SearchText%' OR hoLot LIKE '%$SearchText%' OR tenSV LIKE '%$SearchText%'";
+        // Ghép nối họ và tên để tìm kiếm đầy đủ họ tên
+        $sql = "SELECT * FROM sinhvien WHERE (CONCAT(hoLot, ' ', tenSV) LIKE '%$SearchText%') 
+                OR maSV LIKE '%$SearchText%' 
+                OR maLop LIKE '%$SearchText%' 
+                OR gioiTinh LIKE '%$SearchText%'";
     } else {
         $sql = "SELECT * FROM sinhvien";
     }
     $query = mysqli_query($conn, $sql);
 ?>
+
 <div class="card">
         <div class="card-header ">
             <h3>Danh Sách Sinh Viên</h3>
@@ -26,15 +31,15 @@
                     <th scope="col">Mã sinh viên</th>
                     <th scope="col">Họ tên</th>
                     <th scope="col">Ngày sinh</th>
-                    <th scope="col">Giói tính</th>
+                    <th scope="col">Giới tính</th>
                     <th scope="col">Mã Lớp</th>
                     <th scope="col">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
             <?php while($row = mysqli_fetch_assoc($query)){?>
-                <tr>
-                    <td><a class="btn " href="index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>"><b><?php echo $row['maSV'] ?></b></a></td>
+                <tr onclick="window.location.href='index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>';" style="cursor: pointer;">
+                    <td><?php echo $row['maSV'] ?></td>
                     <td><?php echo $row['hoLot'] . " " . $row['tenSV']; ?></td>
                     <td><?php echo $row['ngaySinh']?></td>
                     <td><?php echo $row['gioiTinh']?></td>

@@ -18,19 +18,19 @@
                         <input type="hidden" name="masv" value="<?php echo $row['maSV']; ?>"> <!-- Đảm bảo mssv đc giữ lại khi gui đi -->
                     <div class="form-group">
                         <label for="categoryName">Họ:</label>
-                        <input type="text" class="form-control" name="txtho" value="<?php echo $row['hoLot'] ?>" required>
+                        <input type="text" class="form-control" name="txtho" value="<?php echo $row['hoLot'] ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Tên:</label>
-                        <input type="text" class="form-control" name="txtten" value="<?php echo $row['tenSV'] ?>" required>
+                        <input type="text" class="form-control" name="txtten" value="<?php echo $row['tenSV'] ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Ngày Sinh:</label>
-                        <input type="date" class="form-control" name="txtngaysinh" value="<?php echo $row['ngaySinh'] ?>" required>
+                        <input type="date" class="form-control" name="txtngaysinh" value="<?php echo $row['ngaySinh'] ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Giới Tính:</label>
-                        <select class="form-control" name="txtgioitinh" required>
+                        <select class="form-control" name="txtgioitinh" >
                             <?php
                                 if($row['gioiTinh'] == "Nam"){ ?>
                                     <option value="Nữ">Nữ</option>
@@ -49,15 +49,15 @@
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Email:</label>
-                        <input type="text" class="form-control" name="txtemail" value="<?php echo $row['email'] ?>" required>
+                        <input type="text" class="form-control" name="txtemail" value="<?php echo $row['email'] ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Số điện thoại:</label>
-                        <input type="tel" class="form-control" name="txtsodienthoai" value="<?php echo $row['soDT'] ?>" required>
+                        <input type="tel" class="form-control" name="txtsodienthoai" value="<?php echo $row['soDT'] ?>" >
                     </div>
                     <div class="form-group">
                         <label for="categoryName">Địa chỉ:</label>
-                        <input type="text" class="form-control" name="txtdiachi" value="<?php echo $row['diaChi'] ?>" required>
+                        <input type="text" class="form-control" name="txtdiachi" value="<?php echo $row['diaChi'] ?>" >
                     </div>
                     <div class="form-group">
                         <label>Chọn file hình ảnh:</label>
@@ -82,7 +82,7 @@
                     </div>
                     <?php } ?>
                     <div class="form-group">
-                    <input onclick = "return confirm('Bạn có thực sự muốn sửa không?')" class="btn btn-sm btn-success" type="submit" name="edit" value="Edit">
+                    <input onclick = "return confirm('Bạn có thực sự muốn sửa không?')" class="btn btn-sm btn-success" type="submit" name="edit" value="Save">
                     </div>
             </form>
         </div>

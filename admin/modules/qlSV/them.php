@@ -58,7 +58,7 @@
                         </select>
                     </div>
                 <div class="form-group">
-                    <input class="btn btn-sm btn-success" type="submit" name="add" value="Thêm">
+                    <input class="btn btn-sm btn-success" type="submit" name="add" value="Save">
                 </div>
             </form>
         </div>

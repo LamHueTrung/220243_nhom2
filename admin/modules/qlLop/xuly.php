@@ -2,23 +2,70 @@
 	include("../../connect.php");
 
 	//Lấy dữ liệu từ form
-	$ma = $ten = $ghichu =  "";
-	if(!empty($_POST["txtMa"])&&!empty($_POST["txtTen"])&&!empty($_POST["txtghichu"]))
-	{
-		$ma = $_POST["txtMa"];
-		$ten = $_POST["txtTen"];
-		$ghichu = $_POST["txtghichu"];
+	$ma = isset($_POST["txtMa"]) ? trim($_POST["txtMa"]) : '';
+	$ten = isset($_POST["txtTen"]) ? trim($_POST["txtTen"]) : '';
+	$ghichu = isset($_POST["txtghichu"]) ? trim($_POST["txtghichu"]) : '';
+
+	// Kiểm tra validator
+	$valid = true;
+	$error = '';
+
+	// Kiểm tra mã lớp không chứa ký tự tiếng Việt
+	if (!empty($ma) && !preg_match("/^[a-zA-Z0-9]+$/", $ma)) {
+		$valid = false;
+		$error = "Mã lớp không được chứa ký tự tiếng Việt và chỉ bao gồm chữ cái và số.";
 	}
-	if(isset($_POST['add'])){
-        $sql_them = "INSERT INTO lophoc (maLop, tenLop, ghiChu)VALUES ('$ma', '$ten', '$ghichu')";
-        mysqli_query($conn, $sql_them);
+
+	// Kiểm tra tên lớp không phải là chuỗi trống hoặc có nhiều khoảng trắng
+	if (!empty($ten) && preg_match("/^\s+$/", $ten)) {
+		$valid = false;
+		$error = "Tên lớp không được là khoảng trắng.";
+	}
+
+	if(isset($_POST['add']) && $valid) {
+        $sql_kiemtra = "SELECT * FROM lophoc WHERE maLop = '$ma'";
+        $result = mysqli_query($conn, $sql_kiemtra);
+        // Nếu mã lớp chưa tồn tại thì thực hiện thêm lớp
+        $sql_them = "INSERT INTO lophoc (maLop, tenLop, ghiChu) VALUES ('$ma', '$ten', '$ghichu')";
+        if(mysqli_num_rows($result) > 0) {
+            // Nếu mã lớp đã tồn tại
+            echo "<script>
+            alert('Mã lớp đã tồn tại. Vui lòng nhập mã khác!');
+            window.location.href = '../../index.php?action=qllop&query=them';
+            </script>";
+        } else {
+            if(mysqli_query($conn, $sql_them)) {
+                echo "<script>
+                alert('Thêm lớp thành công!');
+                window.location.href = '../../index.php?action=qllop&query=lietke';
+                </script>";
+            } else {
+                echo "<script>
+                alert('Có lỗi xảy ra khi thêm lớp!');
+                window.location.href = '../../index.php?action=qllop&query=lietke';
+                </script>";
+            }
+        }
+    } elseif (isset($_POST['edit'])) {
+        // Lấy dữ liệu lớp học cũ nếu trường nào bỏ trống hoặc chỉ có khoảng trắng
+        $sql_get_old = "SELECT * FROM lophoc WHERE maLop = '$_GET[malop]'";
+        $result_old = mysqli_query($conn, $sql_get_old);
+        $row_old = mysqli_fetch_assoc($result_old);
+
+        // Nếu dữ liệu mới trống hoặc chỉ có khoảng trắng, lấy giá trị cũ
+        $ten = (!empty($ten) && !preg_match("/^\s+$/", $ten)) ? $ten : $row_old['tenLop'];
+        $ghichu = (!empty($ghichu) && !preg_match("/^\s+$/", $ghichu)) ? $ghichu : $row_old['ghiChu'];
+
+        // Cập nhật thông tin lớp
+        $sql_update = "UPDATE lophoc SET tenLop = '$ten', ghiChu = '$ghichu' WHERE maLop = '$_GET[malop]'";
+        mysqli_query($conn, $sql_update);
         header('location: ../../index.php?action=qllop&query=lietke');
-    }elseif(isset($_POST['edit'])){
-        $sql = "UPDATE lophoc SET  tenLop = '$ten', ghiChu = '$ghichu'
-            Where maLop = '$_GET[malop]'";
-            mysqli_query($conn, $sql);
-            header('location: ../../index.php?action=qllop&query=lietke');
-    }else{
+    } elseif (!$valid) {
+        echo "<script>
+            alert('$error');
+            window.location.href = '../../index.php?action=qllop&query=them';
+        </script>";
+    } else {
         $IdClass = $_GET['malop'];
         
         // Kiểm tra xem có sinh viên nào trong lớp không
@@ -68,21 +115,8 @@
                 </script>";
             }
         }
-
-
-        // $id = $_GET['malop'];
-        // $sql1 = " DELETE sinhvien
-        // FROM sinhvien
-        // JOIN lophoc ON sinhvien.maLop = lophoc.maLop
-        // WHERE lophoc.maLop = '$id'";
-
-        // mysqli_query($conn, $sql1);
-
-        // $sql2 = "DELETE FROM lophoc WHERE maLop = '$id'";
-        // mysqli_query($conn, $sql2);
-         
-        // 
     }
+
 	//Đóng kết nối
 	$conn->close();
 ?>
