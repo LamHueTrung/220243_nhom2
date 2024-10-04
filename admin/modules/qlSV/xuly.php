@@ -10,20 +10,32 @@
     $sodienthoai = isset($_POST["txtsodienthoai"]) ? trim($_POST["txtsodienthoai"]) : '';
     $diachi = isset($_POST["txtdiachi"]) ? trim($_POST["txtdiachi"]) : '';
     $malop = isset($_POST["txtmalop"]) ? trim($_POST["txtmalop"]) : '';
-    $hinhanh = $_FILES['txthinhanh']['name'];
-    $hinhanhtam = $_FILES['txthinhanh']['tmp_name'];
+
+    // Image handling
+    $allowed_extensions = ['png', 'jpg', 'jpeg', 'svg', 'webp'];
+    $hinhanh = isset($_FILES['txthinhanh']['name']) && !empty($_FILES['txthinhanh']['name']) ? $_FILES['txthinhanh']['name'] : 'profile.png';
+    $hinhanhtam = isset($_FILES['txthinhanh']['tmp_name']) ? $_FILES['txthinhanh']['tmp_name'] : '';
 
     // Validator flags
     $valid = true;
     $error = '';
 
-    //  Kiểm tra mã sinh viên chỉ chứa số
+    // Check file extension if an image is uploaded
+    if ($hinhanh != 'profile.png') {
+        $file_extension = strtolower(pathinfo($hinhanh, PATHINFO_EXTENSION));
+        if (!in_array($file_extension, $allowed_extensions)) {
+            $valid = false;
+            $error .= "Chỉ chấp nhận các định dạng hình ảnh: png, jpg, jpeg, svg, webp. ";
+        }
+    }
+
+    // Kiểm tra mã sinh viên chỉ chứa số
     if (!empty($masv) && !preg_match("/^\d+$/", $masv)) {
         $valid = false;
         $error .= "Mã sinh viên chỉ được chứa số. ";
     }
 
-    //  Kiểm tra ngày sinh hợp lý dựa trên mã lớp
+    // Kiểm tra ngày sinh hợp lý dựa trên mã lớp
     $current_year = date("Y");
     $birth_year = date("Y", strtotime($ngaysinh));
 
@@ -43,13 +55,13 @@
         }
     }
 
-    //  Kiểm tra số điện thoại đúng định dạng (bắt đầu bằng số 0, 10 hoặc 11 chữ số)
+    // Kiểm tra số điện thoại đúng định dạng (bắt đầu bằng số 0, 10 hoặc 11 chữ số)
     if (!empty($sodienthoai) && !preg_match("/^0\d{9,10}$/", $sodienthoai)) {
         $valid = false;
         $error .= "Số điện thoại phải bắt đầu bằng số 0 và có 10 hoặc 11 chữ số. ";
     }
 
-    //  Kiểm tra email đúng định dạng
+    // Kiểm tra email đúng định dạng
     if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $valid = false;
         $error .= "Email không hợp lệ. ";
@@ -66,16 +78,22 @@
             window.location.href = '../../index.php?action=qlsv&query=them';
             </script>";
         } else {
+            // Insert new student
             $sql_them = "INSERT INTO sinhvien (maSV, hoLot, tenSV, ngaySinh, gioiTinh, maLop, email, soDT, diaChi, hinhAnh)
             VALUES ('$masv', '$hosv', '$tensv', '$ngaysinh', '$gioitinh', '$malop', '$email', '$sodienthoai', '$diachi', '$hinhanh')";
             mysqli_query($conn, $sql_them);
-            move_uploaded_file($hinhanhtam, 'image/' .$hinhanh);
+
+            // Only move the uploaded file if a valid image file is uploaded
+            if ($hinhanh != 'profile.png') {
+                move_uploaded_file($hinhanhtam, 'image/' . $hinhanh);
+            }
+
             header('location: ../../index.php?action=qlsv&query=lietke');
         }
     } elseif (isset($_POST['edit'])) {
         $id = $_POST['masv'];  // Lấy mã sinh viên từ POST
 
-        // Lấy dữ liệu cũ nếu trường nào trống hoặc chỉ là khoảng trắng
+        // Get old data if fields are empty
         $sql_get_old = "SELECT * FROM sinhvien WHERE maSV = '$id' LIMIT 1";
         $result_old = mysqli_query($conn, $sql_get_old);
         $row_old = mysqli_fetch_assoc($result_old);
@@ -89,18 +107,19 @@
         $diachi = !empty($diachi) ? $diachi : $row_old['diaChi'];
         $malop = !empty($malop) ? $malop : $row_old['maLop'];
 
-        // Cập nhật thông tin sinh viên
-        if ($hinhanh != '') {
+        // Update student information
+        if ($hinhanh != 'profile.png') {
             move_uploaded_file($hinhanhtam, 'image/' . $hinhanh);
-            $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop', email = '$email', soDT = '$sodienthoai', diaChi = '$diachi', hinhAnh = '$hinhanh' WHERE maSV = '$id'";  
+            $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop', email = '$email', soDT = '$sodienthoai', diaChi = '$diachi', hinhAnh = '$hinhanh' WHERE maSV = '$id'";
             $sql_slt = "SELECT * FROM sinhvien WHERE maSV = '$id' LIMIT 1";
             $query = mysqli_query($conn, $sql_slt);
             while ($row = mysqli_fetch_array($query)) {
-                unlink('image/'.$row['hinhAnh']);
+                unlink('image/' . $row['hinhAnh']);
             }
         } else {
             $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop', email = '$email', soDT = '$sodienthoai', diaChi = '$diachi' WHERE maSV = '$id'";
         }
+
         mysqli_query($conn, $sql);
         header('location: ../../index.php?action=qlsv&query=lietke');
     } elseif (!$valid) {
@@ -120,6 +139,6 @@
         header('location: ../../index.php?action=qlsv&query=lietke');
     }
 
-    //Đóng kết nối
+    // Close connection
     $conn->close();
 ?>
