@@ -2,7 +2,7 @@
     $sql_lophoc = "SELECT *FROM lophoc where maLop = '$_GET[malop]' ";
     $querylophoc = mysqli_query($conn, $sql_lophoc) ;
     $row_title = mysqli_fetch_assoc($querylophoc);  
-    $sql = "SELECT * FROM sinhvien where maLop = '$_GET[malop]' ";
+    $sql = "SELECT * FROM sinhvien where isDeleted = 0 and maLop = '$_GET[malop]' ";
     $query = mysqli_query($conn, $sql);
 ?>
 <div class="card">

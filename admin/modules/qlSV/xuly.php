@@ -66,7 +66,7 @@
         $valid = false;
         $error .= "Email không hợp lệ. ";
     }
-
+    //add
     if(isset($_POST['add']) && $valid) {
         // Kiểm tra mã sinh viên đã tồn tại chưa
         $sql_kiemtra = "SELECT * FROM sinhvien WHERE maSV = '$masv'";
@@ -90,6 +90,7 @@
 
             header('location: ../../index.php?action=qlsv&query=lietke');
         }
+    // edit
     } elseif (isset($_POST['edit'])) {
         $id = $_POST['masv'];  // Lấy mã sinh viên từ POST
 
@@ -127,14 +128,11 @@
             alert('$error');
             window.location.href = '../../index.php?action=qlsv&query=them';
         </script>";
+    // delete
     } else {
         $id = $_GET['masv'];
-        $sql = "SELECT * FROM sinhvien WHERE maSV = '$id' LIMIT 1";
-        $query = mysqli_query($conn, $sql);
-        while ($row = mysqli_fetch_array($query)) {
-            unlink('image/' . $row['hinhAnh']);
-        }
-        $sql_xoa = "DELETE FROM sinhvien WHERE maSV = $id";
+         // Cập nhật isDeleted thành 1 thay vì xóa hoàn toàn
+        $sql_xoa = "UPDATE sinhvien SET isDeleted = 1 WHERE maSV = '$id'";
         mysqli_query($conn, $sql_xoa);
         header('location: ../../index.php?action=qlsv&query=lietke');
     }

@@ -2,12 +2,14 @@
     if (isset($_POST['search'])) {
         $SearchText = $_POST['SearchText'];
         // Ghép nối họ và tên để tìm kiếm đầy đủ họ tên
-        $sql = "SELECT * FROM sinhvien WHERE (CONCAT(hoLot, ' ', tenSV) LIKE '%$SearchText%') 
+        $sql = "SELECT * FROM sinhvien 
+                WHERE isDeleted = 0 
+                AND (CONCAT(hoLot, ' ', tenSV) LIKE '%$SearchText%' 
                 OR maSV LIKE '%$SearchText%' 
                 OR maLop LIKE '%$SearchText%' 
-                OR gioiTinh LIKE '%$SearchText%'";
+                OR gioiTinh LIKE '%$SearchText%')";
     } else {
-        $sql = "SELECT * FROM sinhvien";
+        $sql = "SELECT * FROM sinhvien WHERE isDeleted = 0";
     }
     $query = mysqli_query($conn, $sql);
 ?>

@@ -23,6 +23,8 @@
             include('modules/qlLop/showup.php');
         }elseif($tam == 'qlsv' && $query == 'thongtin'){
             include('modules/qlSV/thongtinchitiet.php');
+        }elseif($tam == 'mautinrac' && $query == 'rac'){
+            include('modules/backup/deleted.php');
         }
     ?>
 </div>

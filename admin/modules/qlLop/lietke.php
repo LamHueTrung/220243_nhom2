@@ -1,5 +1,5 @@
 <?php
-    $sql = "SELECT * FROM lophoc";
+    $sql = "SELECT * FROM lophoc WHERE isDeleted = 0";
     $query = mysqli_query($conn, $sql);
 ?>
 <div class="card">
@@ -24,7 +24,7 @@
                 <td><?php echo $row['ghiChu'] ?></td>
                 <td>
                     <a href="?action=qllop&query=sua&malop=<?php echo $row['maLop']?>" class="btn btn-sm btn-primary" type="submit">Edit</a>
-                    <a onclick="return confirm('Nếu xóa lớp này thì tất cả sinh viên trong lớp này sẽ bị xóa. Bạn có chắc muốn xóa không?')" href="modules/qlLop/xuly.php?malop=<?php echo $row['maLop']; ?>" class="btn btn-sm btn-danger" type="submit">Delete</a>
+                    <a onclick="return confirm('Bạn có chắc muốn xóa không?')" href="modules/qlLop/xuly.php?malop=<?php echo $row['maLop']; ?>" class="btn btn-sm btn-danger" name="delete" type="submit">Delete</a>
                 </td>
             </tr>
         <?php } ?> 
