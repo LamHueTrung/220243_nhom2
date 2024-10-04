@@ -1,5 +1,5 @@
 <?php
-    $sql = "SELECT * FROM sinhvien WHERE maSV ='$_GET[masv]' LIMIT 1";
+    $sql = "SELECT * FROM sinhvien, lophoc WHERE sinhvien.maLop = lophoc.maLop and maSV ='$_GET[masv]' LIMIT 1";
     $query = mysqli_query($conn, $sql);
 ?>
 <div class="container mt-5">
@@ -20,6 +20,8 @@
           </div>
           <div class="card-body">
             <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Mã lớp: </strong><?php echo $row['maLop'];?></li>
+            <li class="list-group-item"><strong>Tên lớp: </strong><?php echo $row['tenLop'];?></li>
               <li class="list-group-item"><strong>Ngày sinh: </strong><?php echo $row['ngaySinh'];?> </li>
               <li class="list-group-item"><strong>Giới tính: </strong><?php echo $row['gioiTinh'];?></li>
               <li class="list-group-item"><strong>Email: </strong><?php echo $row['email'];?></li>
