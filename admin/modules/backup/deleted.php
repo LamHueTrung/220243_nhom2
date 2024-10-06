@@ -64,7 +64,8 @@
                                     <td><?php echo $row_sinhvien['gioiTinh']; ?></td>
                                     <td><?php echo $row_sinhvien['maLop']; ?></td>
                                     <td>
-                                        <a onclick="return confirm('Bạn có chác muốn khôi phục sinh viên <?php echo $row_sinhvien['tenSV']; ?> không')" href="modules/backup/xuly.php?maSV=<?php echo $row_sinhvien['maSV']; ?>" class="btn btn-sm btn-success">Khôi phục</a>
+                                        <a onclick="return confirm('Bạn có chắc muốn khôi phục sinh viên <?php echo $row_sinhvien['tenSV']; ?> không')" href="modules/backup/xuly.php?maSV=<?php echo $row_sinhvien['maSV']; ?>" class="btn btn-sm btn-success">Khôi phục</a>
+                                        <a onclick="return confirm('Bạn có chắc muốn xóa sinh viên <?php echo $row_sinhvien['tenSV']; ?> không?')" href="modules/backup/xuly.php?action=delete&maSV=<?php echo $row_sinhvien['maSV']; ?>" class="btn btn-sm btn-danger">Xóa</a>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -95,7 +96,8 @@
                                     <td><?php echo $row_lop['tenLop']; ?></td>
                                     <td><?php echo $row_lop['ghiChu']; ?></td>
                                     <td>
-                                        <a onclick="return confirm('Bạn có chác muốn khôi phục lop <?php echo $row_lop['maLop']; ?> không')" href="modules/backup/xuly.php?maLop=<?php echo $row_lop['maLop']; ?>" class="btn btn-sm btn-success">Khôi phục</a>
+                                        <a onclick="return confirm('Bạn có chắc muốn khôi phục lớp <?php echo $row_lop['maLop']; ?> không')" href="modules/backup/xuly.php?maLop=<?php echo $row_lop['maLop']; ?>" class="btn btn-sm btn-success">Khôi phục</a>
+                                        <a onclick="return confirm('Bạn có chắc muốn xóa lớp <?php echo $row_lop['maLop']; ?> không?')" href="modules/backup/xuly.php?action=delete&maLop=<?php echo $row_lop['maLop']; ?>" class="btn btn-sm btn-danger">Xóa</a>
                                     </td>
                                 </tr>
                             <?php } ?>
