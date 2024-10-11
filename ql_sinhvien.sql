@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 04, 2024 lúc 08:56 PM
+-- Thời gian đã tạo: Th10 11, 2024 lúc 06:21 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `admin`
+--
+
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
+  `ho` varchar(255) NOT NULL,
+  `ten` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `admin`
+--
+
+INSERT INTO `admin` (`id`, `ho`, `ten`, `username`, `password`) VALUES
+(1, 'Hoang', 'Nhut', 'admin', '21232f297a57a5a743894a0e4a801fc3');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `lophoc`
 --
 
@@ -39,7 +60,8 @@ CREATE TABLE `lophoc` (
 --
 
 INSERT INTO `lophoc` (`maLop`, `tenLop`, `ghiChu`, `isDeleted`) VALUES
-('DA21TTC', 'Công Nghệ Thông Tin C', 'Khóa 21 - năm học 2021-2025', 0);
+('DA21TTB', 'Công Nghệ Thông Tin B', 'Lop B', 0),
+('DA21TTC', 'Công Nghệ Thông Tin C', 'lop c', 1);
 
 -- --------------------------------------------------------
 
@@ -66,14 +88,43 @@ CREATE TABLE `sinhvien` (
 --
 
 INSERT INTO `sinhvien` (`maSV`, `hoLot`, `tenSV`, `ngaySinh`, `gioiTinh`, `maLop`, `email`, `soDT`, `diaChi`, `hinhAnh`, `isDeleted`) VALUES
-('110121206', 'La Tấn', 'Đạt', '2003-02-02', 'Nam', 'DA21TTC', 'latandat@gmail.com', '0912345678', 'Trà Vinh', 'latandat.jpg', 1),
-('110121255', 'Lâm Huệ', 'Trung', '2003-02-08', 'Nam', 'DA21TTC', 'lamhuetrung@gmail.com', '0763849007', 'Tiểu Cần, Trà Vinh', 'lamhuetrung.jpg', 1),
-('110121266', 'Mã Đại', 'Phú', '2003-11-16', 'Nữ', 'DA21TTC', 'daiphu1611@gmail.com', '0868453011', 'Phước Hưng, Tiểu Cần, Trà Vinh', 'madaiphu.jpg', 1),
-('110121269', 'Nguyễn Hoàng', 'Nhựt ', '2002-10-09', 'Nam', 'DA21TTC', 'hoangnhutnguyen7@gmail.com', '0967331058', 'Đại Thôn, Phước Hảo, Châu Thành, Trà Vinh', '427887082_1615266225898770_1382639537682669743_n.jpg', 1);
+('110121255', 'Lâm Huệ', 'Trung', '2002-11-11', 'Nam', 'DA21TTB', 'lamhuetrung@gmail.com', '0312345678', 'tv', 'profile.png', 0),
+('110121266', 'Mã Đại', 'Phú', '2002-11-11', 'Nam', 'DA21TTB', 'phu@gmail.com', '0967331058', 'tv', 'madaiphu.jpg', 0),
+('110121269', 'Nguyễn Hoàng', 'Nhựt', '2002-10-09', 'Nam', 'DA21TTC', 'hoangnhutnguyen7@gmail.com', '0967331058', 'Trà Vinh', '427887082_1615266225898770_1382639537682669743_n.jpg', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `user`
+--
+
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL,
+  `taikhoan` varchar(255) NOT NULL,
+  `matkhau` varchar(255) NOT NULL,
+  `loaitk` tinyint(1) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `user`
+--
+
+INSERT INTO `user` (`id_user`, `taikhoan`, `matkhau`, `loaitk`) VALUES
+(1, '110121266', '$2y$10$w3RAkdbPxgSy82QurpKThOOuJ50.5terzNkQGkgDMm4ZFkqAOAkiW', 0),
+(2, 'NhutHoang', '$2y$10$Dx7FmBWY7KSFkoQhFJJQ2OLunG7W2jKF2nssjdtn002EhPzVq2bm2', 1),
+(3, 'admin', '$2y$10$t87u3hr3alukKcxt8w0sG.kbIJhAgYoxvf44mmdxA166gys..F/lC', 1),
+(4, 'HoangNhut', '$2y$10$lKYYBHI31WSUy3YVQhCITuor4OaTLF0vE6Se2YpUKqJbrJP/oE2MS', 1),
+(5, '', '$2y$10$vEy1UWtPY.yCnh6QgYj7K.Yavfuu0q1cKnPTex7grMqCZ4IF8TFR2', 1);
 
 --
 -- Chỉ mục cho các bảng đã đổ
 --
+
+--
+-- Chỉ mục cho bảng `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `lophoc`
@@ -87,6 +138,28 @@ ALTER TABLE `lophoc`
 ALTER TABLE `sinhvien`
   ADD PRIMARY KEY (`maSV`),
   ADD KEY `maLop` (`maLop`);
+
+--
+-- Chỉ mục cho bảng `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id_user`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT cho bảng `user`
+--
+ALTER TABLE `user`
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

@@ -29,6 +29,11 @@
             }
         }
     ?>
+        <?php if (!empty($error_message)): ?>
+            <div class="alert alert-danger" role="alert">
+                <strong>ERROR:</strong> <?= $error_message ?>
+            </div>
+        <?php endif; ?>
     <div class="container">
         <div class="row justify-content-center align-items-center" style="height: 100vh;">
             <div class="col-md-6 col-lg-4">
@@ -38,11 +43,6 @@
                     </div>
                     <div class="card-body">
                         <form action="login.php" method="POST">
-                            <?php if (!empty($error_message)): ?>
-                                <div class="alert alert-danger" role="alert">
-                                    <strong>ERROR:</strong> <?= $error_message ?>
-                                </div>
-                            <?php endif; ?>
                             <div class="form-group">
                                 <label for="username">Tên đăng nhập:</label>
                                 <input id="username" type="text" class="form-control" name="username" placeholder="Enter your username">
