@@ -82,19 +82,24 @@
             $sql_them = "INSERT INTO sinhvien (maSV, hoLot, tenSV, ngaySinh, gioiTinh, maLop, email, soDT, diaChi, hinhAnh)
             VALUES ('$masv', '$hosv', '$tensv', '$ngaysinh', '$gioitinh', '$malop', '$email', '$sodienthoai', '$diachi', '$hinhanh')";
             mysqli_query($conn, $sql_them);
-
+    
             // Only move the uploaded file if a valid image file is uploaded
             if ($hinhanh != 'profile.png') {
                 move_uploaded_file($hinhanhtam, 'image/' . $hinhanh);
             }
-
+    
+            // Insert into taikhoan with default password
+            $matkhau_macdinh = password_hash($masv, PASSWORD_DEFAULT); // Mã hóa mật khẩu mặc định
+            $sql_taikhoan = "INSERT INTO user (taikhoan, matkhau) VALUES ('$masv', '$matkhau_macdinh')";
+            mysqli_query($conn, $sql_taikhoan);
+    
             header('location: ../../index.php?action=qlsv&query=lietke');
         }
+    
     // edit
     } elseif (isset($_POST['edit'])) {
         $id = $_POST['masv'];  // Lấy mã sinh viên từ POST
 
-        // Get old data if fields are empty
         $sql_get_old = "SELECT * FROM sinhvien WHERE maSV = '$id' LIMIT 1";
         $result_old = mysqli_query($conn, $sql_get_old);
         $row_old = mysqli_fetch_assoc($result_old);
@@ -108,7 +113,6 @@
         $diachi = !empty($diachi) ? $diachi : $row_old['diaChi'];
         $malop = !empty($malop) ? $malop : $row_old['maLop'];
 
-        // Update student information
         if ($hinhanh != 'profile.png') {
             move_uploaded_file($hinhanhtam, 'image/' . $hinhanh);
             $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop', email = '$email', soDT = '$sodienthoai', diaChi = '$diachi', hinhAnh = '$hinhanh' WHERE maSV = '$id'";
@@ -131,7 +135,6 @@
     // delete
     } else {
         $id = $_GET['masv'];
-         // Cập nhật isDeleted thành 1 thay vì xóa hoàn toàn
         $sql_xoa = "UPDATE sinhvien SET isDeleted = 1 WHERE maSV = '$id'";
         mysqli_query($conn, $sql_xoa);
         header('location: ../../index.php?action=qlsv&query=lietke');

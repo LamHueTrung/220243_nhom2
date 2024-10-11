@@ -25,6 +25,11 @@
             include('modules/qlSV/thongtinchitiet.php');
         }elseif($tam == 'mautinrac' && $query == 'rac'){
             include('modules/backup/deleted.php');
+
+        
+        
+        }elseif($tam == 'taotk' && $query == 'giangvien' ){
+            include('../admin/signup.php');
         }
     ?>
 </div>

@@ -1,7 +1,6 @@
 <?php
     if (isset($_POST['search'])) {
         $SearchText = $_POST['SearchText'];
-        // Ghép nối họ và tên để tìm kiếm đầy đủ họ tên
         $sql_sinhvien = "SELECT * FROM sinhvien 
                 WHERE isDeleted = 1 
                 AND (CONCAT(hoLot, ' ', tenSV) LIKE '%$SearchText%' 
@@ -16,7 +15,7 @@
     $sql_lop = "SELECT * FROM lophoc WHERE isDeleted = 1";
     $query_lop = mysqli_query($conn, $sql_lop);
 
-    ?>
+?>
     <div class="container mt-5">
         <h2 class="text-center">Danh Sách Đã Xóa</h2>
         <ul class="nav nav-tabs" id="deletedTabs" role="tablist">

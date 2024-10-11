@@ -11,10 +11,14 @@
             <a class="nav-link" href="index.php?action=qlsv&query=lietke">Sinh viên</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="?action=taotk&query=giangvien">Tạo tài khoản</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="index.php?action=mautinrac&query=rac">Đã xóa</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" href="../admin/logout.php">Logout</a>
         </li>
+
     </ul>
-</div>
+</div> 
