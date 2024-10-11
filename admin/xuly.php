@@ -20,7 +20,7 @@
             </script>";
         } else {
             // Insert into user with hashed password
-            $matkhau_macdinh = password_hash($password, PASSWORD_DEFAULT); // Mã hóa mật khẩu
+            $matkhau_macdinh = md5($password); // Mã hóa mật khẩu
             $sql_taikhoan = "INSERT INTO user (taikhoan, matkhau, loaitk) VALUES ('$username', '$matkhau_macdinh', $type)";
 
             if (mysqli_query($conn, $sql_taikhoan)) {

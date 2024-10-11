@@ -13,7 +13,9 @@
                 unlink('../qlSV/image/' . $row['hinhAnh']);
             }
             $sql_delete_sinhvien = "DELETE FROM sinhvien WHERE maSV = $maSV";
+            $sql_delete_taikhoan = "DELETE FROM user WHERE taikhoan = $maSV";
             mysqli_query($conn, $sql_delete_sinhvien);
+            mysqli_query($conn, $sql_delete_taikhoan);
             echo "<script>alert('Xóa sinh viên thành công!'); window.location.href='../../index.php?action=mautinrac&query=rac';</script>";
         } else {
             // Khôi phục sinh viên
@@ -30,7 +32,9 @@
                 if (mysqli_num_rows($query_lop) > 0) {
                     // Khôi phục sinh viên
                     $sql_khoiphuc = "UPDATE sinhvien SET isDeleted = 0 WHERE maSV = '$maSV'";
+                    $sql_khoiphuc_taikhoan = "UPDATE user SET isDeleted = 0 WHERE taikhoan = '$maSV'";
                     mysqli_query($conn, $sql_khoiphuc);
+                    mysqli_query($conn, $sql_khoiphuc_taikhoan);
                     echo "<script>alert('Khôi phục sinh viên thành công!'); window.location.href='../../index.php?action=mautinrac&query=rac';</script>";
                 } else {
                     echo "<script>alert('Mã lớp của sinh viên đã bị xóa. Bạn vui lòng khôi phục lớp trước!'); window.location.href='../../index.php?action=mautinrac&query=rac';</script>";
@@ -67,6 +71,21 @@
             // Xóa tất cả sinh viên trong lớp và lớp học
             $sql_delete_sinhvien = "DELETE FROM sinhvien WHERE maLop = '$maLop'";
             mysqli_query($conn, $sql_delete_sinhvien);
+            // Xoá tài khoản
+            $sql_getbyIdClass = "SELECT maSV FROM sinhvien WHERE maLop = '$maLop'"; // Đảm bảo $maLop là chuỗi hoặc số hợp lệ
+            $query = mysqli_query($conn, $sql_getbyIdClass);
+
+            // Kiểm tra xem truy vấn có thành công không
+            if (!$query) {
+                die("Lỗi truy vấn SQL: " . mysqli_error($conn)); // Hiển thị lỗi chi tiết
+            }
+
+            // Tiếp tục xử lý nếu truy vấn thành công
+            while ($row = mysqli_fetch_assoc($query)) {
+                $id = $row['maSV']; // Chú ý: maSV phải chính xác với tên cột trong cơ sở dữ liệu
+                $sql_delete_taikhoan = "DELETE FROM user WHERE taikhoan = '$id'";
+                mysqli_query($conn, $sql_delete_taikhoan);
+            }
 
             $sql_delete_lop = "DELETE FROM lophoc WHERE maLop = '$maLop'";
             mysqli_query($conn, $sql_delete_lop);

@@ -89,7 +89,7 @@
             }
     
             // Insert into taikhoan with default password
-            $matkhau_macdinh = password_hash($masv, PASSWORD_DEFAULT); // Mã hóa mật khẩu mặc định
+            $matkhau_macdinh = md5($masv); // Mã hóa mật khẩu mặc định
             $sql_taikhoan = "INSERT INTO user (taikhoan, matkhau) VALUES ('$masv', '$matkhau_macdinh')";
             mysqli_query($conn, $sql_taikhoan);
     
@@ -136,7 +136,9 @@
     } else {
         $id = $_GET['masv'];
         $sql_xoa = "UPDATE sinhvien SET isDeleted = 1 WHERE maSV = '$id'";
+        $sql_xoa_tk = " UPDATE user SET isDeleted = 1 WHERE taikhoan = $id";
         mysqli_query($conn, $sql_xoa);
+        mysqli_query($conn, $sql_xoa_tk);
         header('location: ../../index.php?action=qlsv&query=lietke');
     }
 

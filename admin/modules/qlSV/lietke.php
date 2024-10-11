@@ -40,7 +40,7 @@
             </thead>
             <tbody>
             <?php while($row = mysqli_fetch_assoc($query)){?>
-                <tr onclick="window.location.href='index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>';" style="cursor: pointer;">
+                <tr>
                     <td><?php echo $row['maSV'] ?></td>
                     <td><?php echo $row['hoLot'] . " " . $row['tenSV']; ?></td>
                     <td><?php echo $row['ngaySinh']?></td>
@@ -49,6 +49,7 @@
                     <td>
                         <a href="?action=qlsv&query=sua&masv=<?php echo $row['maSV'] ?>" class="btn btn-sm btn-primary" class="btn btn-sm btn-danger" type="submit" >Edit</a>
                         <a onclick = "return confirm('Bạn có thực sự muốn xóa không?')" href="modules/qlSV/xuly.php?masv=<?php echo $row['maSV']; ?>" class="btn btn-sm btn-danger" type="submit">Delete</a>
+                        <a onclick="window.location.href='index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>';" class="btn btn-sm btn-success" type="submit">View info</a>
                     </td>
                 </tr>
             <?php } ?> 

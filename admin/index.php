@@ -13,13 +13,12 @@
     <title>Admin</title>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <?php 
         session_start();
         if(!isset($_SESSION['dangnhap'])){
             header("Location: login.php");
-            }
+            } 
         
         include('./connect.php');
         include('./modules/menu.php');
