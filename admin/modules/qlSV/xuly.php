@@ -8,7 +8,17 @@
     $gioitinh = isset($_POST["txtgioitinh"]) ? trim($_POST["txtgioitinh"]) : '';
     $email = isset($_POST["txtemail"]) ? trim($_POST["txtemail"]) : '';
     $sodienthoai = isset($_POST["txtsodienthoai"]) ? trim($_POST["txtsodienthoai"]) : '';
-    $diachi = isset($_POST["txtdiachi"]) ? trim($_POST["txtdiachi"]) : '';
+    $diachiCuThe = isset($_POST["txtdiachi"]) ? trim($_POST["txtdiachi"]) : '';
+
+    $province_id = $_POST['province_id'];
+    $province_name = $_POST['province_name'];
+
+    $district_id = $_POST['district_id'];
+    $district_name = $_POST['district_name'];
+
+    $ward_id = $_POST['ward_id'];
+    $ward_name = $_POST['ward_name'];
+
     $malop = isset($_POST["txtmalop"]) ? trim($_POST["txtmalop"]) : '';
 
     // Image handling
@@ -119,6 +129,8 @@
             window.location.href = '../../index.php?action=qlsv&query=them';
             </script>";
         } else {
+            // Tạo chuỗi địa chỉ
+            $diachi = "$diachiCuThe - $province_name - $district_name - $ward_name"; // Cập nhật ở đây
             // Insert new student
             $sql_them = "INSERT INTO sinhvien (maSV, hoLot, tenSV, ngaySinh, gioiTinh, maLop, email, soDT, diaChi, hinhAnh)
             VALUES ('$masv', '$hosv', '$tensv', '$ngaysinh', '$gioitinh', '$malop', '$email', '$sodienthoai', '$diachi', '$hinhanh')";

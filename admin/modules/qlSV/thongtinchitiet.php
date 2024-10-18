@@ -6,7 +6,7 @@
     <div class="row">
         <?php
             while($row = mysqli_fetch_assoc($query)){
-        ?> 
+?> 
       <!-- Profile Picture -->
         <div class="col-md-4 text-center">
             <img src="modules/qlSV/image/<?php echo $row['hinhAnh'];?>" class="rounded-square img-thumbnail" alt="Student Profile Picture" <?php echo $row['hinhAnh'];?>>
@@ -26,7 +26,7 @@
                         <li class="list-group-item"><strong>Giới tính: </strong><?php echo $row['gioiTinh'];?></li>
                         <li class="list-group-item"><strong>Email: </strong><?php echo $row['email'];?></li>
                         <li class="list-group-item"><strong>Số điện thoại: </strong><?php echo ($row['soDT'])?></li>
-                        <li class="list-group-item"><strong>Địa chỉ: </strong><?php echo $row['diaChi'];?></li>
+                        <li class='list-group-item'><strong>Địa chỉ: </strong><?php echo $row['diaChi'] ?></li>
                     </ul>
                 </div>
             </div>
