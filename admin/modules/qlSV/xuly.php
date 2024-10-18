@@ -68,6 +68,47 @@
     }
     //add
     if(isset($_POST['add']) && $valid) {
+        if (is_uploaded_file($_FILES['csvFile']['tmp_name'])) {
+            $csvFile = fopen($_FILES['csvFile']['tmp_name'], 'r');
+    
+            // Bỏ qua dòng đầu tiên nếu nó chứa tiêu đề
+            fgetcsv($csvFile);
+    
+            // Lặp qua tệp CSV và chèn dữ liệu vào cơ sở dữ liệu
+            while (($data = fgetcsv($csvFile, 1000, ",")) !== FALSE) {
+                // Trích xuất dữ liệu CSV thành các biến
+                $masv = $data[0]; 
+                $hosv = $data[1];
+                $tensv = $data[2];
+                $ngaysinh = $data[3];
+                $gioitinh = $data[4];
+                $malop = $data[5];
+                $email = $data[6];
+                $sodienthoai = $data[7];
+                $diachi = $data[8];
+                $hinhanh = $data[9];
+    
+                // Kiểm tra xem sinh viên đã tồn tại trong cơ sở dữ liệu chưa
+                $sql_kiemtra = "SELECT * FROM sinhvien WHERE maSV = '$masv'";
+                $result = mysqli_query($conn, $sql_kiemtra);
+    
+                if (mysqli_num_rows($result) == 0) {
+                    // Nếu không tồn tại, thực hiện câu truy vấn
+                    $sql_them = "INSERT INTO sinhvien (maSV, hoLot, tenSV, ngaySinh, gioiTinh, maLop, email, soDT, diaChi, hinhAnh)
+                    VALUES ('$masv', '$hosv', '$tensv', '$ngaysinh', '$gioitinh', '$malop', '$email', '$sodienthoai', '$diachi', '$hinhanh')";
+                    mysqli_query($conn, $sql_them);
+    
+                    // Di chuyển tệp hình ảnh nếu được tải lên và nó không phải là mặc định
+                    if ($hinhanh != 'profile.png') {
+                        move_uploaded_file($hinhanhtam, 'image/' . $hinhanh);
+                    }
+                }
+            }
+            fclose($csvFile);
+            echo "<script>alert('Import CSV thành công!'); window.location.href = '../../index.php?action=qlsv&query=lietke';</script>";
+        } else {
+            echo "<script>alert('Vui lòng chọn tệp CSV!'); window.location.href = '../../index.php?action=qlsv&query=them';</script>";
+        }
         // Kiểm tra mã sinh viên đã tồn tại chưa
         $sql_kiemtra = "SELECT * FROM sinhvien WHERE maSV = '$masv'";
         $result = mysqli_query($conn, $sql_kiemtra);
@@ -89,13 +130,12 @@
             }
     
             // Insert into taikhoan with default password
-            $matkhau_macdinh = md5($masv); // Mã hóa mật khẩu mặc định
+            $matkhau_macdinh = password_hash($masv, PASSWORD_DEFAULT); // Mã hóa mật khẩu mặc định
             $sql_taikhoan = "INSERT INTO user (taikhoan, matkhau) VALUES ('$masv', '$matkhau_macdinh')";
             mysqli_query($conn, $sql_taikhoan);
     
             header('location: ../../index.php?action=qlsv&query=lietke');
         }
-    
     // edit
     } elseif (isset($_POST['edit'])) {
         $id = $_POST['masv'];  // Lấy mã sinh viên từ POST
@@ -136,9 +176,7 @@
     } else {
         $id = $_GET['masv'];
         $sql_xoa = "UPDATE sinhvien SET isDeleted = 1 WHERE maSV = '$id'";
-        $sql_xoa_tk = " UPDATE user SET isDeleted = 1 WHERE taikhoan = $id";
         mysqli_query($conn, $sql_xoa);
-        mysqli_query($conn, $sql_xoa_tk);
         header('location: ../../index.php?action=qlsv&query=lietke');
     }
 

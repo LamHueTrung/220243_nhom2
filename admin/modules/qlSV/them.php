@@ -10,23 +10,23 @@
             <form action="modules/qlSV/xuly.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="categoryName">Mã Sinh Viên:</label>
-                    <input type="text" class="form-control" name="txtmasv" placeholder="Nhập mã sinh viên" required>
+                    <input type="text" class="form-control" name="txtmasv" placeholder="Nhập mã sinh viên" >
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Họ:</label>
-                    <input type="text" class="form-control" name="txtho" placeholder="Nhập họ sinh viên" required>
+                    <input type="text" class="form-control" name="txtho" placeholder="Nhập họ sinh viên" >
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Tên:</label>
-                    <input type="text" class="form-control" name="txtten" placeholder="Nhập tên sinh viên" required>
+                    <input type="text" class="form-control" name="txtten" placeholder="Nhập tên sinh viên" >
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Ngày Sinh:</label>
-                    <input type="date" class="form-control" name="txtngaysinh" placeholder="Nhập ngày sinh" required>
+                    <input type="date" class="form-control" name="txtngaysinh" placeholder="Nhập ngày sinh" >
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Giới Tính:</label>
-                    <select class="form-control" name="txtgioitinh" required>
+                    <select class="form-control" name="txtgioitinh" >
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>
                         <option value="Khác">Khác</option>
@@ -34,15 +34,15 @@
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Email:</label>
-                    <input type="text" class="form-control" name="txtemail" placeholder="Nhập email" required>
+                    <input type="text" class="form-control" name="txtemail" placeholder="Nhập email" >
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Số điện thoại:</label>
-                    <input type="number" class="form-control" name="txtsodienthoai" placeholder="Nhập số điện thoại" required>
+                    <input type="number" class="form-control" name="txtsodienthoai" placeholder="Nhập số điện thoại" >
                 </div>
                 <div class="form-group">
                     <label for="categoryName">Địa chỉ:</label>
-                    <input type="text" class="form-control" name="txtdiachi" placeholder="Nhập địa chỉ" required>
+                    <input type="text" class="form-control" name="txtdiachi" placeholder="Nhập địa chỉ" >
                 </div>
                 <div class="form-group">
                     <label>Chọn file hình ảnh:</label>
@@ -58,7 +58,12 @@
                         </select>
                     </div>
                 <div class="form-group">
-                    <input class="btn btn-sm btn-success" type="submit" name="add" value="Save">
+                    <input class="btn btn-sm btn-success" type="submit" name="add" value="Thêm">
+                </div>
+                <div class="form-group">
+                    <label>Chọn file CSV:</label>
+                    <input type="file" name="csvFile">
+                    <input class="btn btn-sm btn-primary" type="submit" name="add" value="Thêm sinh viên">
                 </div>
             </form>
         </div>

@@ -18,7 +18,7 @@
 
     if(isset($_POST['dangnhap'])){
         $taikhoan = $_POST['username'];
-        $matkhau = md5($_POST['password']); // Mã hóa mật khẩu nhập vào bằng MD5
+        $matkhau = md5($_POST['password']);
 
         // Kiểm tra tài khoản trong bảng admin
         $sql_admin = "SELECT * FROM admin WHERE username='$taikhoan' AND password='$matkhau' LIMIT 1";

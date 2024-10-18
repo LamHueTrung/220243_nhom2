@@ -24,14 +24,15 @@
             <tbody>
             <?php while($row = mysqli_fetch_array($query)){?>
                 <tr>
-                <td><a class="btn " href="index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>"><b><?php echo $row['maSV'] ?></b></a></td>
+                <th><?php echo $row['maSV'] ?></th>
                     <td><?php echo $row['hoLot'] . " " . $row['tenSV']; ?></td>
                     <td><?php echo $row['ngaySinh']?></td>
                     <td><?php echo $row['gioiTinh']?></td>
                     <th><?php echo $row['maLop']?></th>
                     <td>
-                        <a href="?action=qlsv&query=sua&masv=<?php echo $row['maSV'] ?>" class="btn btn-sm btn-primary" class="btn btn-sm btn-danger" type="submit" >Edit</a>
-                        <a onclick = "return confirm('Bạn có thực sự muốn xóa không?')" href="modules/qlSV/xuly.php?masv=<?php echo $row['maSV']; ?>" class="btn btn-sm btn-danger" type="submit">Delete</a>
+                        <a href="?action=qlsv&query=sua&masv=<?php echo $row['maSV'] ?>"  class="btn btn-sm" type="submit" >Sửa</a>
+                        <a onclick = "return confirm('Bạn có thực sự muốn xóa không?')" href="modules/qlSV/xuly.php?masv=<?php echo $row['maSV']; ?>" class="btn btn-sm " type="submit">Xóa</a>
+                        <a class="btn btn-sm" href="index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>">Xem</a>
                     </td>
                 </tr>
             <?php } ?> 

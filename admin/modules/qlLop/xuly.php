@@ -23,29 +23,68 @@
     }
 
     if (isset($_POST['add']) && $valid) {
-        $sql_kiemtra = "SELECT * FROM lophoc WHERE maLop = '$ma' AND isDeleted = 0";
-        $result = mysqli_query($conn, $sql_kiemtra);
-        
-        // Nếu mã lớp chưa tồn tại thì thực hiện thêm lớp
-        $sql_them = "INSERT INTO lophoc (maLop, tenLop, ghiChu) VALUES ('$ma', '$ten', '$ghichu')";
-        
-        if (mysqli_num_rows($result) > 0) {
-            // Nếu mã lớp đã tồn tại
-            echo "<script>
-                alert('Mã lớp đã tồn tại. Vui lòng nhập mã khác!');
-                window.location.href = '../../index.php?action=qllop&query=them';
-            </script>";
-        } else {
-            if (mysqli_query($conn, $sql_them)) {
+        // Kiểm tra xem có file CSV được tải lên không
+        if (isset($_FILES['csvFile']) && $_FILES['csvFile']['error'] == 0) {
+            $fileName = $_FILES['csvFile']['tmp_name'];
+            // Mở file CSV
+            if (($handle = fopen($fileName, 'r')) !== FALSE) {
+                // Đọc tiêu đề (nếu có)
+                fgetcsv($handle);
+    
+                // Đọc từng dòng dữ liệu
+                while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                    $maLop = trim($data[0]);  // Lấy mã lớp từ file CSV
+                    $tenLop = trim($data[1]); // Lấy tên lớp từ file CSV
+                    $ghiChu = trim($data[2]); // Lấy ghi chú từ file CSV
+    
+                    // Kiểm tra xem mã lớp đã tồn tại chưa
+                    $sql_kiemtra = "SELECT * FROM lophoc WHERE maLop = '$maLop' AND isDeleted = 0";
+                    $result = mysqli_query($conn, $sql_kiemtra);
+    
+                    if (mysqli_num_rows($result) == 0) {
+                        // Nếu mã lớp chưa tồn tại, thêm lớp
+                        $sql_them = "INSERT INTO lophoc (maLop, tenLop, ghiChu) VALUES ('$maLop', '$tenLop', '$ghiChu')";
+                        mysqli_query($conn, $sql_them);
+                    } else {
+                        echo "Mã lớp $maLop đã tồn tại!<br>";
+                    }
+                }
+    
+                // Đóng file CSV
+                fclose($handle);
+    
                 echo "<script>
-                    alert('Thêm lớp thành công!');
+                    alert('Thêm dữ liệu từ file CSV thành công!');
                     window.location.href = '../../index.php?action=qllop&query=lietke';
                 </script>";
             } else {
+                echo "<script>alert('Không thể mở file CSV.');</script>";
+            }
+        }else{
+            $sql_kiemtra = "SELECT * FROM lophoc WHERE maLop = '$ma' AND isDeleted = 0";
+            $result = mysqli_query($conn, $sql_kiemtra);
+            
+            // Nếu mã lớp chưa tồn tại thì thực hiện thêm lớp
+            $sql_them = "INSERT INTO lophoc (maLop, tenLop, ghiChu) VALUES ('$ma', '$ten', '$ghichu')";
+            
+            if (mysqli_num_rows($result) > 0) {
+                // Nếu mã lớp đã tồn tại
                 echo "<script>
-                    alert('Có lỗi xảy ra khi thêm lớp!');
-                    window.location.href = '../../index.php?action=qllop&query=lietke';
+                    alert('Mã lớp đã tồn tại. Vui lòng nhập mã khác!');
+                    window.location.href = '../../index.php?action=qllop&query=them';
                 </script>";
+            } else {
+                if (mysqli_query($conn, $sql_them)) {
+                    echo "<script>
+                        alert('Thêm lớp thành công!');
+                        window.location.href = '../../index.php?action=qllop&query=lietke';
+                    </script>";
+                } else {
+                    echo "<script>
+                        alert('Có lỗi xảy ra khi thêm lớp!');
+                        window.location.href = '../../index.php?action=qllop&query=lietke';
+                    </script>";
+                }
             }
         }
     } elseif (isset($_POST['edit'])) {

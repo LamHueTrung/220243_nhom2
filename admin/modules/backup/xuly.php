@@ -35,7 +35,7 @@
                     $sql_khoiphuc_taikhoan = "UPDATE user SET isDeleted = 0 WHERE taikhoan = '$maSV'";
                     mysqli_query($conn, $sql_khoiphuc);
                     mysqli_query($conn, $sql_khoiphuc_taikhoan);
-                    echo "<script>alert('Khôi phục sinh viên thành công!'); window.location.href='../../index.php?action=mautinrac&query=rac';</script>";
+                    echo "<script>alert('Khôi phục sinh viên thành công!'); window.location.href='../../index.php?action=qlsv&query=lietke';</script>";
                 } else {
                     echo "<script>alert('Mã lớp của sinh viên đã bị xóa. Bạn vui lòng khôi phục lớp trước!'); window.location.href='../../index.php?action=mautinrac&query=rac';</script>";
                 }
@@ -58,7 +58,7 @@
                         if (confirm('Lớp học này đang có sinh viên. Bạn có chắc muốn xóa tất cả sinh viên và lớp học này không?')) {
                             window.location.href = 'xuly.php?action=deleteAll&maLop=$maLop';
                         } else {
-                            window.location.href = '../../index.php?action=mautinrac&query=rac';
+                            window.location.href = '../../index.php?action=qlsv&query=lietke';
                         }
                     </script>";
             } else {
