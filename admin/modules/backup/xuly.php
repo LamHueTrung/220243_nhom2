@@ -14,8 +14,10 @@
             }
             $sql_delete_sinhvien = "DELETE FROM sinhvien WHERE maSV = $maSV";
             $sql_delete_taikhoan = "DELETE FROM user WHERE taikhoan = $maSV";
+            $sql_delete_diachi = "DELETE FROM province WHERE id = $maSV";
             mysqli_query($conn, $sql_delete_sinhvien);
             mysqli_query($conn, $sql_delete_taikhoan);
+            mysqli_query($conn, $sql_delete_diachi);
             echo "<script>alert('Xóa sinh viên thành công!'); window.location.href='../../index.php?action=mautinrac&query=rac';</script>";
         } else {
             // Khôi phục sinh viên

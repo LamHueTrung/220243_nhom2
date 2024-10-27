@@ -129,11 +129,13 @@
             window.location.href = '../../index.php?action=qlsv&query=them';
             </script>";
         } else {
+            $sql_themdiachi = "INSERT INTO province(id, id_province, id_district, id_ward, diachicuthe) VALUES('$masv', '$province_id', '$district_id', '$ward_id', '$diachiCuThe')";
+            mysqli_query($conn, $sql_themdiachi);
             // Tạo chuỗi địa chỉ
-            $diachi = "$diachiCuThe - $province_name - $district_name - $ward_name"; // Cập nhật ở đây
+            // $diachi = "$diachiCuThe - $ward_name - $district_name - $province_name"; // Cập nhật ở đây
             // Insert new student
             $sql_them = "INSERT INTO sinhvien (maSV, hoLot, tenSV, ngaySinh, gioiTinh, maLop, email, soDT, diaChi, hinhAnh)
-            VALUES ('$masv', '$hosv', '$tensv', '$ngaysinh', '$gioitinh', '$malop', '$email', '$sodienthoai', '$diachi', '$hinhanh')";
+            VALUES ('$masv', '$hosv', '$tensv', '$ngaysinh', '$gioitinh', '$malop', '$email', '$sodienthoai', '$masv', '$hinhanh')";
             mysqli_query($conn, $sql_them);
     
             // Only move the uploaded file if a valid image file is uploaded
@@ -164,7 +166,6 @@
         $sodienthoai = !empty($sodienthoai) ? $sodienthoai : $row_old['soDT'];
         $diachi = !empty($diachi) ? $diachi : $row_old['diaChi'];
         $malop = !empty($malop) ? $malop : $row_old['maLop'];
-
         if ($hinhanh != 'profile.png') {
             move_uploaded_file($hinhanhtam, 'image/' . $hinhanh);
             $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop', email = '$email', soDT = '$sodienthoai', diaChi = '$diachi', hinhAnh = '$hinhanh' WHERE maSV = '$id'";
@@ -177,6 +178,19 @@
             $sql = "UPDATE sinhvien SET maSV = '$masv', hoLot = '$hosv', tenSV = '$tensv', ngaySinh = '$ngaysinh', gioiTinh = '$gioitinh', maLop = '$malop', email = '$email', soDT = '$sodienthoai', diaChi = '$diachi' WHERE maSV = '$id'";
         }
 
+
+        // lưu thay đổi địa chỉ
+        $sql_diachi_old = "SELECT * FROM province WHERE id = '$id' LIMIT 1";
+        $result_diachi_old = mysqli_query($conn, $sql_diachi_old);
+        $row_diachi_old = mysqli_fetch_assoc($result_diachi_old);
+        
+        $province_id = !empty($province_id) ? $province_id : $row_diachi_old['id_province'];
+        $district_id = !empty($district_id) ? $district_id : $row_diachi_old['id_district'];
+        $ward_id = !empty($ward_id) ? $ward_id : $row_diachi_old['id_ward'];
+        $diachiCuThe = !empty($diachiCuThe) ? $diachiCuThe : $row_diachi_old['diachicuthe'];
+
+        $sql_themdiachi = "UPDATE province SET id_province = '$province_id', id_district = '$district_id', id_ward = '$ward_id', diachicuthe = '$diachiCuThe'";
+            mysqli_query($conn, $sql_themdiachi);
         mysqli_query($conn, $sql);
         header('location: ../../index.php?action=qlsv&query=lietke');
     } elseif (!$valid) {

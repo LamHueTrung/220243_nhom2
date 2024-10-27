@@ -27,6 +27,8 @@
             include('modules/backup/deleted.php');        
         }elseif($tam == 'taotk' && $query == 'giangvien' ){
             include('../admin/signup.php');
+        } else {
+            include('../admin/modules/home.php');
         }
     ?>
 </div>

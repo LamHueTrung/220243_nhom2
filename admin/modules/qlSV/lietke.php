@@ -14,45 +14,42 @@
     $query = mysqli_query($conn, $sql);
 ?>
 
-<div class="card">
-        <div class="card-header ">
-            <h3>Danh Sách Sinh Viên</h3>
-            <a class = "btn btn-primary mb-3" href = "index.php?action=qlsv&query=them">Thêm mới</a>
-            <form action="" method = "POST">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Search" name = "SearchText">
-                    <div class="input-group-append">
-                        <button class="btn btn-success" type="submit" name="search">Tìm kiếm</button>
-                    </div>
-                </div>
-            </form> 
-        </div>
-        <table class="table table-bordered table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Mã sinh viên</th>
-                    <th scope="col">Họ tên</th>
-                    <th scope="col">Ngày sinh</th>
-                    <th scope="col">Giới tính</th>
-                    <th scope="col">Mã Lớp</th>
-                    <th scope="col">Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php while($row = mysqli_fetch_assoc($query)){?>
-                <tr>
-                    <th><?php echo $row['maSV'] ?></th>
-                    <td><?php echo $row['hoLot'] . " " . $row['tenSV']; ?></td>
-                    <td><?php echo $row['ngaySinh']?></td>
-                    <td><?php echo $row['gioiTinh']?></td>
-                    <th><?php echo $row['maLop']?></th>
-                    <td>
-                        <a href="?action=qlsv&query=sua&masv=<?php echo $row['maSV'] ?>" class="btn btn-sm " type="submit" >Sửa</a>
-                        <a onclick = "return confirm('Bạn có thực sự muốn xóa không?')" href="modules/qlSV/xuly.php?masv=<?php echo $row['maSV']; ?>" class="btn btn-sm " type="submit">Xóa</a>
-                        <a onclick="window.location.href='index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>';" class="btn btn-sm " type="submit">Xem</a>
-                    </td>
-                </tr>
-            <?php } ?> 
-            </tbody>
-        </table>
+
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh Sách Sinh Viên</h6>
     </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Mã sinh viên</th>
+                        <th>Họ tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th>Mã Lớp</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while($row = mysqli_fetch_assoc($query)){ ?>
+                    <tr  style="cursor: pointer;">
+                        <th><?php echo $row['maSV'] ?></th>
+                        <td><?php echo $row['hoLot'] . " " . $row['tenSV']; ?></td>
+                        <td><?php echo $row['ngaySinh']?></td>
+                        <td><?php echo $row['gioiTinh']?></td>
+                        <th><?php echo $row['maLop']?></th>
+                        <td>
+                            <a href="?action=qlsv&query=sua&masv=<?php echo $row['maSV'] ?>" class="btn btn-sm btn-success " type="submit" >Sửa</a>
+                            <a onclick = "return confirm('Bạn có thực sự muốn xóa không?')" href="modules/qlSV/xuly.php?masv=<?php echo $row['maSV']; ?>" class="btn btn-sm btn-danger" type="submit">Xóa</a>
+                            <a onclick="window.location.href='index.php?action=qlsv&query=thongtin&masv=<?php echo $row['maSV'] ?>';" class="btn btn-sm btn-info" type="submit">Xem</a>
+                        </td>
+                    </tr>
+                <?php } ?>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

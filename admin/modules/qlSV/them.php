@@ -40,11 +40,6 @@
                 <label for="categoryName">Số điện thoại:</label>
                 <input type="number" class="form-control" name="txtsodienthoai" placeholder="Nhập số điện thoại" required>
             </div>
-            <div class="form-group">
-                <label for="categoryName">Địa chỉ cụ thể:</label>
-                <input type="text" class="form-control" name="txtdiachi" placeholder="Nhập địa chỉ cụ thể" required>
-            </div>
-
             <!-- Phần chọn Tỉnh/Thành phố, Quận/Huyện, Phường/Xã -->
             <div class="form-group">
                 <label for="province">Tỉnh/Thành phố:</label>
@@ -66,6 +61,10 @@
                     <option value="">Chọn Phường/Xã</option>
                 </select>
                 <input type="hidden" name="ward_name" id="ward_name">
+            </div>
+            <div class="form-group">
+                <label for="categoryName">Địa chỉ cụ thể:</label>
+                <input type="text" class="form-control" name="txtdiachi" placeholder="Nhập địa chỉ cụ thể" required>
             </div>
             <div class="form-group">
                 <label>Chọn file hình ảnh:</label>
